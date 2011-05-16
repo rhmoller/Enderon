@@ -20,7 +20,7 @@
   $('ul').bind('li input', 'click', function() {
     var decor = ($(this)[0].checked) ? "line-through" : "none";
     var line = $(this).closest('li');
-    $(line, 'span.desc').css({'text-decoration': decor});
+    line.find('.desc').css({'text-decoration': decor});
   });
 
   $('.addbutton').bind({
