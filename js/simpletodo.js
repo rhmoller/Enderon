@@ -18,9 +18,13 @@
   });
 
   $('ul').bind('li input', 'click', function() {
-    var decor = ($(this)[0].checked) ? "line-through" : "none";
+    var checked = ($(this)[0].checked);
     var line = $(this).closest('li');
-    line.find('.desc').css({'text-decoration': decor});
+    if (checked) {
+      line.find('.desc').addClass('checked');
+    } else {
+      line.find('.desc').removeClass('checked');
+    }
   });
 
   $('.addbutton').bind({

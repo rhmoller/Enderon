@@ -1,3 +1,28 @@
+body {
+  font: 13.34px helvetica, arial, freesans, clean, sans-serif;
+}
+
 .del {
   color: red;
+}
+
+.todolist {
+  border: 1px solid #888;
+  padding: 1em;
+  width: 300px;
+  background-color: #f0f0f0;
+}
+
+ul {
+  padding: 0 0 1em 0;
+  margin: 0;
+}
+
+li {
+  display: block;
+}
+
+li span.checked {
+  color: #888;
+  text-decoration: line-through;
 }
