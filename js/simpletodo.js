@@ -3,7 +3,7 @@
   var items = (data) ? data.split(';;') : [];
 
   var todo = $('.todolist');
-  var markup = "<div class='status'>Loading...</div><ul></ul><input type='text' id='text'/><input class='addbutton' type='button' value='Add'/></div>";
+  var markup = "<div class='status'>Loading...</div><ul></ul><input type='text' class='newtext'/><input class='addbutton' type='button' value='Add'/></div>";
   todo.append($(markup));
 
   function addItem(txt) {
@@ -11,14 +11,14 @@
   }
 
   var addHandler = function() {
-    var txt = $('#text')[0].value;
+    var txt = $('.newtext')[0].value;
     if (txt.length > 0) {
       addItem(txt);
       items.push(txt);
       $.cache('simpletodolist').set('items', (items.length > 1) ? items.join(';;') : items[0]);
       $('.status').html('');
     }
-    $('#text')[0].value = '';
+    $('.newtext')[0].value = '';
   }
 
   $('ul').bind('li .del', 'click', function() {
@@ -27,6 +27,9 @@
     items = $.without(items, value);
     $.cache('simpletodolist').set('items', (items.length > 1) ? items.join(';;') : items[0]);
     $(this).closest('li').remove();
+    if (items.length == 0) {
+      $('.status').html("No Items!");
+    }
   });
 
   $('ul').bind('li input', 'click', function() {
@@ -43,7 +46,7 @@
     'click': addHandler
   });
 
-  $('#text').bind({
+  $('.newtext').bind({
     'keypress' : function(e) {
       if (e.keyCode == 13) addHandler();
     }
@@ -53,7 +56,7 @@
     addItem(items[i]);
   }
 
-  $('.status').html('No items!');
+  $('.status').html(items.length > 0 ? "" : "No Items!");
 
 })();
 
