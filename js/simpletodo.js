@@ -3,11 +3,15 @@
   var items = (data) ? data.split(';;') : [];
 
   var todo = $('.todolist');
-  var markup = "<div class='status'>Loading...</div><ul></ul><input type='text' class='newtext'/><input class='addbutton' type='button' value='Add'/></div>";
+  var markup = "<div class='status'></div><ul></ul><input type='text' class='newtext'/><input type='button' value='Add'/></div>>";
   todo.append($(markup));
 
   function addItem(txt) {
-    $('ul').append($('<li><input type="checkbox"/><span class="desc">' + txt + '</span> <span class="del">[x]</span></li>'));
+    $('ul').append($('<li><input type="checkbox"/><span class="desc">' + txt + '</span><span class="del">[x]</span></li>'));
+  }
+
+  function store() {
+    $.cache('simpletodolist').set('items', (items.length > 1) ? items.join(';;') : items[0]);
   }
 
   var addHandler = function() {
@@ -15,7 +19,7 @@
     if (txt.length > 0) {
       addItem(txt);
       items.push(txt);
-      $.cache('simpletodolist').set('items', (items.length > 1) ? items.join(';;') : items[0]);
+      store();
       $('.status').html('');
     }
     $('.newtext')[0].value = '';
@@ -25,7 +29,7 @@
     var line = $(this).closest('li');
     var value = line.find('.desc').text();
     items = $.without(items, value);
-    $.cache('simpletodolist').set('items', (items.length > 1) ? items.join(';;') : items[0]);
+    store();
 
     line.animate({
       opacity: 0,
@@ -50,7 +54,7 @@
     }
   });
 
-  $('.addbutton').bind({
+  $('input[value=Add]').bind({
     'click': addHandler
   });
 
@@ -67,4 +71,3 @@
   $('.status').html(items.length > 0 ? "" : "No Items!");
 
 })();
-
