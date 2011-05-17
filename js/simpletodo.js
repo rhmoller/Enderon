@@ -26,7 +26,15 @@
     var value = line.find('.desc').text();
     items = $.without(items, value);
     $.cache('simpletodolist').set('items', (items.length > 1) ? items.join(';;') : items[0]);
-    $(this).closest('li').remove();
+
+    line.animate({
+      opacity: 0,
+      duration: 500,
+      after : function() {
+        line.remove();
+      }
+    });
+
     if (items.length == 0) {
       $('.status').html("No Items!");
     }
